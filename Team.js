@@ -41,6 +41,13 @@ class Team {
         // 一致特性
         this.matchedTraits = [];
 
+     // ビットマスク（重複判定高速化）
+this.memberMask = 0;
+
+for (const member of this.members) {
+    this.memberMask |= (1 << member.id);
+}
+
     }
 
     //----------------------------------------
