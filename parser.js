@@ -27,10 +27,13 @@ class Trait {
 
 class General {
 
-    constructor(name, charm) {
+    constructor(id, name, charm) {
 
+        this.id = id;
         this.name = name;
         this.charm = Number(charm);
+
+        /** @type {Trait[]} */
         this.traits = [];
 
     }
@@ -110,10 +113,11 @@ class Parser {
                 return;
 
             const general =
-                new General(
-                    row["武将"],
-                    row["魅力"]
-                );
+             new General(
+                 generals.length,
+                 row["武将"],
+                 row["魅力"]
+             );
 
             for (let i = 1; i <= 6; i++) {
 
