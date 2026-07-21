@@ -1,156 +1,224 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>キングダム覇道 魅力最適化ツール</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
 <div class="container">
 
     <h1>キングダム覇道 魅力最適化ツール</h1>
 
-    <!-- 武将一覧 -->
+    <!-- 武将登録 -->
+
     <section class="panel">
 
         <div class="panel-title">
-            武将一覧
+            武将登録・編集
         </div>
 
-        <table id="warriorTable">
+        <div class="edit-area">
+
+            <input id="name" type="text" placeholder="武将名">
+
+            <input id="charm" type="number" placeholder="魅力">
+
+            <input class="trait" placeholder="特性①">
+            <input class="trait" placeholder="特性②">
+            <input class="trait" placeholder="特性③">
+            <input class="trait" placeholder="特性④">
+            <input class="trait" placeholder="特性⑤">
+            <input class="trait" placeholder="特性⑥">
+
+            <button id="saveWarrior">
+                武将登録
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- 武将一覧 -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+            登録済み武将
+        </div>
+
+        <table>
+
             <thead>
 
-<tr>
+            <tr>
 
-<th>武将名</th>
+                <th>武将名</th>
+                <th>魅力</th>
+                <th>編集</th>
+                <th>削除</th>
 
-<th>魅力</th>
+            </tr>
 
-<th>編集</th>
+            </thead>
 
-<th>削除</th>
+            <tbody id="warriorBody">
 
-</tr>
-
-</thead>
-
-<tbody id="warriorBody">
-
-</tbody>
+            </tbody>
 
         </table>
 
     </section>
 
     <div class="button-area">
+
         <button id="optimizeBtn">
+
             最適編成を計算
+
         </button>
+
     </div>
 
     <!-- 結果 -->
 
     <section class="result-panel">
 
-        <h2>計算結果</h2>
+        <h2>最適編成</h2>
 
         <div class="teams">
 
-            <div class="team" id="team1">
+            <!-- 部隊1 -->
+
+            <div class="team">
 
                 <h3>部隊①</h3>
 
-                <table>
-                    <tr>
-                        <td>中央</td>
-                        <td id="t1-center">-</td>
-                    </tr>
+                <div class="triangle">
 
-                    <tr>
-                        <td>左</td>
-                        <td id="t1-left">-</td>
-                    </tr>
+                    <div class="center" id="t1-center">-</div>
 
-                    <tr>
-                        <td>右</td>
-                        <td id="t1-right">-</td>
-                    </tr>
-                </table>
+                    <div class="bottom">
 
-                <hr>
+                        <div class="left" id="t1-left">-</div>
 
-                <p>基礎魅力：<span id="t1-base">0</span></p>
-                <p>ボーナス：<span id="t1-bonus">0%</span></p>
-                <p>最終魅力：<span id="t1-final">0</span></p>
+                        <div class="right" id="t1-right">-</div>
 
-                <div class="traits" id="t1-traits"></div>
+                    </div>
+
+                </div>
+
+                <div class="stats">
+
+                    <p>基礎魅力：
+                        <span id="t1-base">0</span>
+                    </p>
+
+                    <p>ボーナス：
+                        <span id="t1-bonus">0%</span>
+                    </p>
+
+                    <p>最終魅力：
+                        <span id="t1-final">0</span>
+                    </p>
+
+                </div>
+
+                <div class="traits" id="t1-traits">
+
+                </div>
 
             </div>
 
+            <!-- 部隊2 -->
 
-            <div class="team" id="team2">
+            <div class="team">
 
                 <h3>部隊②</h3>
 
-                <table>
-                    <tr>
-                        <td>中央</td>
-                        <td id="t2-center">-</td>
-                    </tr>
+                <div class="triangle">
 
-                    <tr>
-                        <td>左</td>
-                        <td id="t2-left">-</td>
-                    </tr>
+                    <div class="center" id="t2-center">-</div>
 
-                    <tr>
-                        <td>右</td>
-                        <td id="t2-right">-</td>
-                    </tr>
-                </table>
+                    <div class="bottom">
 
-                <hr>
+                        <div class="left" id="t2-left">-</div>
 
-                <p>基礎魅力：<span id="t2-base">0</span></p>
-                <p>ボーナス：<span id="t2-bonus">0%</span></p>
-                <p>最終魅力：<span id="t2-final">0</span></p>
+                        <div class="right" id="t2-right">-</div>
 
-                <div class="traits" id="t2-traits"></div>
+                    </div>
+
+                </div>
+
+                <div class="stats">
+
+                    <p>基礎魅力：
+                        <span id="t2-base">0</span>
+                    </p>
+
+                    <p>ボーナス：
+                        <span id="t2-bonus">0%</span>
+                    </p>
+
+                    <p>最終魅力：
+                        <span id="t2-final">0</span>
+                    </p>
+
+                </div>
+
+                <div class="traits" id="t2-traits">
+
+                </div>
 
             </div>
 
+            <!-- 部隊3 -->
 
-            <div class="team" id="team3">
+            <div class="team">
 
                 <h3>部隊③</h3>
 
-                <table>
-                    <tr>
-                        <td>中央</td>
-                        <td id="t3-center">-</td>
-                    </tr>
+                <div class="triangle">
 
-                    <tr>
-                        <td>左</td>
-                        <td id="t3-left">-</td>
-                    </tr>
+                    <div class="center" id="t3-center">-</div>
 
-                    <tr>
-                        <td>右</td>
-                        <td id="t3-right">-</td>
-                    </tr>
-                </table>
+                    <div class="bottom">
 
-                <hr>
+                        <div class="left" id="t3-left">-</div>
 
-                <p>基礎魅力：<span id="t3-base">0</span></p>
-                <p>ボーナス：<span id="t3-bonus">0%</span></p>
-                <p>最終魅力：<span id="t3-final">0</span></p>
+                        <div class="right" id="t3-right">-</div>
 
-                <div class="traits" id="t3-traits"></div>
+                    </div>
+
+                </div>
+
+                <div class="stats">
+
+                    <p>基礎魅力：
+                        <span id="t3-base">0</span>
+                    </p>
+
+                    <p>ボーナス：
+                        <span id="t3-bonus">0%</span>
+                    </p>
+
+                    <p>最終魅力：
+                        <span id="t3-final">0</span>
+                    </p>
+
+                </div>
+
+                <div class="traits" id="t3-traits">
+
+                </div>
 
             </div>
 
@@ -158,47 +226,32 @@
 
     </section>
 
-    <section class="panel">
-
-    <div class="panel-title">
-        武将管理
-    </div>
-
-    <div class="edit-area">
-
-        <input id="name" type="text" placeholder="武将名">
-
-        <input id="charm" type="number" placeholder="魅力">
-
-        <input class="trait" placeholder="特性①">
-        <input class="trait" placeholder="特性②">
-        <input class="trait" placeholder="特性③">
-        <input class="trait" placeholder="特性④">
-        <input class="trait" placeholder="特性⑤">
-        <input class="trait" placeholder="特性⑥">
-
-        <button id="saveWarrior">
-            武将登録
-        </button>
-
-    </div>
-
-</section>
-
     <section class="summary">
-
-        <h2>評価</h2>
 
         <table>
 
             <tr>
+
                 <td>最低魅力</td>
-                <td id="lowestCharm">0</td>
+
+                <td id="lowestCharm">
+
+                    0
+
+                </td>
+
             </tr>
 
             <tr>
+
                 <td>平均魅力</td>
-                <td id="averageCharm">0</td>
+
+                <td id="averageCharm">
+
+                    0
+
+                </td>
+
             </tr>
 
         </table>
@@ -210,4 +263,5 @@
 <script src="app.js"></script>
 
 </body>
+
 </html>
