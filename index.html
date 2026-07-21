@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>キングダム覇道 魅力最適化ツール</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>キングダム覇道 魅力最適化ツール</h1>
+
+    <!-- 武将一覧 -->
+    <section class="panel">
+
+        <div class="panel-title">
+            武将一覧
+        </div>
+
+        <table id="warriorTable">
+            <thead>
+                <tr>
+                    <th>使用</th>
+                    <th>武将名</th>
+                    <th>魅力</th>
+                </tr>
+            </thead>
+
+            <tbody id="warriorBody">
+                <!-- JavaScriptで生成 -->
+            </tbody>
+
+        </table>
+
+    </section>
+
+    <div class="button-area">
+        <button id="optimizeBtn">
+            最適編成を計算
+        </button>
+    </div>
+
+    <!-- 結果 -->
+
+    <section class="result-panel">
+
+        <h2>計算結果</h2>
+
+        <div class="teams">
+
+            <div class="team" id="team1">
+
+                <h3>部隊①</h3>
+
+                <table>
+                    <tr>
+                        <td>中央</td>
+                        <td id="t1-center">-</td>
+                    </tr>
+
+                    <tr>
+                        <td>左</td>
+                        <td id="t1-left">-</td>
+                    </tr>
+
+                    <tr>
+                        <td>右</td>
+                        <td id="t1-right">-</td>
+                    </tr>
+                </table>
+
+                <hr>
+
+                <p>基礎魅力：<span id="t1-base">0</span></p>
+                <p>ボーナス：<span id="t1-bonus">0%</span></p>
+                <p>最終魅力：<span id="t1-final">0</span></p>
+
+                <div class="traits" id="t1-traits"></div>
+
+            </div>
+
+
+            <div class="team" id="team2">
+
+                <h3>部隊②</h3>
+
+                <table>
+                    <tr>
+                        <td>中央</td>
+                        <td id="t2-center">-</td>
+                    </tr>
+
+                    <tr>
+                        <td>左</td>
+                        <td id="t2-left">-</td>
+                    </tr>
+
+                    <tr>
+                        <td>右</td>
+                        <td id="t2-right">-</td>
+                    </tr>
+                </table>
+
+                <hr>
+
+                <p>基礎魅力：<span id="t2-base">0</span></p>
+                <p>ボーナス：<span id="t2-bonus">0%</span></p>
+                <p>最終魅力：<span id="t2-final">0</span></p>
+
+                <div class="traits" id="t2-traits"></div>
+
+            </div>
+
+
+            <div class="team" id="team3">
+
+                <h3>部隊③</h3>
+
+                <table>
+                    <tr>
+                        <td>中央</td>
+                        <td id="t3-center">-</td>
+                    </tr>
+
+                    <tr>
+                        <td>左</td>
+                        <td id="t3-left">-</td>
+                    </tr>
+
+                    <tr>
+                        <td>右</td>
+                        <td id="t3-right">-</td>
+                    </tr>
+                </table>
+
+                <hr>
+
+                <p>基礎魅力：<span id="t3-base">0</span></p>
+                <p>ボーナス：<span id="t3-bonus">0%</span></p>
+                <p>最終魅力：<span id="t3-final">0</span></p>
+
+                <div class="traits" id="t3-traits"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="summary">
+
+        <h2>評価</h2>
+
+        <table>
+
+            <tr>
+                <td>最低魅力</td>
+                <td id="lowestCharm">0</td>
+            </tr>
+
+            <tr>
+                <td>平均魅力</td>
+                <td id="averageCharm">0</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
