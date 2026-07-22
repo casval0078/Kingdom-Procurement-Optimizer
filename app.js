@@ -420,4 +420,327 @@ function calcTeam(center,left,right){
 
     };
 
+    }
+
+//==============================
+// 全部隊候補
+//==============================
+
+let teamCandidates = [];
+
+function combinations(arr, size){
+
+    const result=[];
+
+    function dfs(start, temp){
+
+        if(temp.length===size){
+
+            result.push([...temp]);
+
+            return;
+
+        }
+
+        for(let i=start;i<arr.length;i++){
+
+            temp.push(arr[i]);
+
+            dfs(i+1,temp);
+
+            temp.pop();
+
+        }
+
+    }
+
+    dfs(0,[]);
+
+    return result;
+
+}
+
+function permutations(arr){
+
+    const result=[];
+
+    function dfs(temp, used){
+
+        if(temp.length===arr.length){
+
+            result.push([...temp]);
+
+            return;
+
+        }
+
+        for(let i=0;i<arr.length;i++){
+
+            if(used[i]) continue;
+
+            used[i]=true;
+
+            temp.push(arr[i]);
+
+            dfs(temp,used);
+
+            temp.pop();
+
+            used[i]=false;
+
+        }
+
+    }
+
+    dfs([],[]);
+
+    return result;
+
+}
+
+function buildTeamCandidates(){
+
+    teamCandidates=[];
+
+    const combs=combinations(warriors,3);
+
+    combs.forEach(group=>{
+
+        let best=null;
+
+        const perms=permutations(group);
+
+        perms.forEach(p=>{
+
+            const center=p[0];
+            const left=p[1];
+            const right=p[2];
+
+            const calc=calcTeam(
+                center,
+                left,
+                right
+            );
+
+            if(
+                best===null ||
+                calc.final>best.final
+            ){
+
+                best={
+
+                    members:[
+                        center.id,
+                        left.id,
+                        right.id
+                    ],
+
+                    center,
+                    left,
+                    right,
+
+                    base:calc.base,
+
+                    bonus:calc.bonus,
+
+                    final:calc.final,
+
+                    detail:calc.detail
+
+                };
+
+            }
+
+        });
+
+        teamCandidates.push({
+
+    ...best,
+
+    memberSet:new Set(best.members)
+
+});
+
+    });
+
+}
+
+document
+.getElementById("optimizeBtn")
+.onclick=()=>{
+
+    if(warriors.length<9){
+
+        alert("武将が9人以上必要です");
+
+        return;
+
+    }
+
+    const best = optimize();
+
+    showResult(best);
+
+}
+
+//==============================
+// 重複判定
+//==============================
+
+function hasDuplicate(a,b){
+
+    for(const id of a.memberSet){
+
+        if(b.memberSet.has(id)){
+
+            return true;
+
+        }
+
+    }
+
+    return false;
+
+}
+
+function hasDuplicate3(a,b,c){
+
+    return hasDuplicate(a,b)
+        || hasDuplicate(a,c)
+        || hasDuplicate(b,c);
+
+}
+
+function optimize(){
+
+    buildTeamCandidates();
+
+    let best=null;
+
+    const n=teamCandidates.length;
+
+    for(let i=0;i<n;i++){
+
+        const t1=teamCandidates[i];
+
+        for(let j=i+1;j<n;j++){
+
+            const t2=teamCandidates[j];
+
+            if(hasDuplicate(t1,t2)){
+
+                continue;
+
+            }
+
+            for(let k=j+1;k<n;k++){
+
+                const t3=teamCandidates[k];
+
+                if(hasDuplicate3(t1,t2,t3)){
+
+                    continue;
+
+                }
+
+                const lowest=Math.min(
+
+                    t1.final,
+                    t2.final,
+                    t3.final
+
+                );
+
+                if(
+
+                    best===null ||
+
+                    lowest>best.lowest
+
+                ){
+
+                    best={
+
+                        teams:[t1,t2,t3],
+
+                        lowest
+
+                    };
+
+                }
+
+            }
+
+        }
+
+    }
+
+    return best;
+
+}
+
+function showResult(best){
+
+    if(!best){
+
+        alert("編成が見つかりません");
+
+        return;
+
+    }
+
+    best.teams.forEach((team,index)=>{
+
+        const n=index+1;
+
+        document.getElementById(`t${n}-center`).textContent=
+            team.center.name;
+
+        document.getElementById(`t${n}-left`).textContent=
+            team.left.name;
+
+        document.getElementById(`t${n}-right`).textContent=
+            team.right.name;
+
+        document.getElementById(`t${n}-base`).textContent=
+            Math.round(team.base);
+
+        document.getElementById(`t${n}-bonus`).textContent=
+            team.bonus+"%";
+
+        document.getElementById(`t${n}-final`).textContent=
+            team.final;
+
+        document.getElementById(`t${n}-traits`).innerHTML=
+
+            team.detail.map(d=>
+
+                `${d.side}：${d.trait} (+${d.bonus}%)`
+
+            ).join("<br>");
+
+    });
+
+    document.getElementById("lowestCharm").textContent=
+
+        best.lowest;
+
+    const avg=
+
+        Math.round(
+
+            best.teams.reduce(
+
+                (s,t)=>s+t.final,
+
+                0
+
+            )/3
+
+        );
+
+    document.getElementById("averageCharm").textContent=
+
+        avg;
+
 }
